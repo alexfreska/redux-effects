@@ -15,11 +15,14 @@ const EFFECT_COMPOSE = 'EFFECT_COMPOSE'
  */
 
 function effects ({dispatch, getState}) {
-  return next => action =>
-    action.type === EFFECT_COMPOSE
-      ? composeEffect(action)
-      : next(action)
-
+  return next => action => {
+    if (typeof action === 'function') {
+      return maybeDispatch(action(getState()))
+    } else if (action.type === EFFECT_COMPOSE) {
+      return composeEffect(action)
+    }
+    return next(action)
+  }
 
   function composeEffect (action) {
     const q = promisify(maybeDispatch(action.payload))
