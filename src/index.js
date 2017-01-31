@@ -1,10 +1,4 @@
 /**
- * Imports
- */
-
-import isPromise from 'is-promise'
-
-/**
  * Action Types
  */
 
@@ -45,7 +39,7 @@ function promisify (val) {
 }
 
 function noop () {}
-function rethrow (err) { throw err; }
+function rethrow (err) { throw err }
 
 /**
  * Action creator
